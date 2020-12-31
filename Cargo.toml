@@ -12,3 +12,7 @@ description = "A Ray Tracer, made by Steve"
 [[bin]]
 name = "gradient"
 path = "bin/gradient.rs"
+
+[[bin]]
+name = "background"
+path = "bin/background.rs"

@@ -1,6 +1,6 @@
-use std::ops::{Add, Sub, Mul, AddAssign, SubAssign, MulAssign, DivAssign};
+use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -8,6 +8,11 @@ pub struct Vec3 {
 }
 
 impl Vec3 {
+
+    pub fn from(x: f64, y: f64, z: f64) -> Self {
+        Vec3 { x:x, y:y, z:z }
+    }
+
     pub fn x(&self) -> &f64 { return &self.x }
     pub fn y(&self) -> &f64 { return &self.y }
     pub fn z(&self) -> &f64 { return &self.z }
@@ -32,6 +37,15 @@ impl Vec3 {
             x: self.y * other.z - self.z * other.y,
             y: -(self.x * other.z - self.z * other.x),
             z: self.x * other.y  - self.y * other.x
+        }
+    }
+
+    pub fn unit_vector(self) -> Self {
+        let divisor = self.length();
+        return Self {
+            x: self.x / divisor,
+            y: self.y / divisor,
+            z: self.z / divisor,
         }
     }
 }
@@ -97,6 +111,17 @@ impl Mul<Vec3> for Vec3 {
     }
 }
 
+impl Mul<f64> for Vec3 {
+    type Output = Self;
+
+    fn mul(self, other: f64) -> Self {
+        Self {
+            x: self.x * other,
+            y: self.y * other,
+            z: self.z * other,
+        }
+    }
+}
 // a *= b
 impl MulAssign<Vec3> for Vec3 {
     fn mul_assign(&mut self, other: Vec3) {
@@ -104,6 +129,19 @@ impl MulAssign<Vec3> for Vec3 {
             x: self.x * other.x,
             y: self.y * other.y,
             z: self.z * other.z,
+        }
+    }
+}
+
+// a / b
+impl Div<Vec3> for Vec3 {
+    type Output = Self;
+
+    fn div(self, other: Vec3) -> Self {
+        Self {
+            x: self.x / other.x,
+            y: self.y / other.y,
+            z: self.z / other.z,
         }
     }
 }
