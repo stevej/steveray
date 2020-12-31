@@ -1,0 +1,14 @@
+[package]
+name = "steveray"
+version = "0.1.0"
+authors = ["Steve Jenson <stevej@fruitless.org>"]
+edition = "2018"
+description = "A Ray Tracer, made by Steve"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[[bin]]
+name = "gradient"
+path = "bin/gradient.rs"
