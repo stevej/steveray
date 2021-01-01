@@ -16,3 +16,7 @@ path = "bin/gradient.rs"
 [[bin]]
 name = "background"
 path = "bin/background.rs"
+
+[[bin]]
+name = "sphere"
+path = "bin/sphere.rs"
