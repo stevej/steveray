@@ -1,18 +1,24 @@
 use steveray::vec3::Vec3;
 use steveray::ray::Ray;
 
-fn hit_sphere(center: Vec3, radius: f64, ray: Ray) -> bool {
+fn hit_sphere(center: Vec3, radius: f64, ray: Ray) -> f64 {
     let oc = ray.origin() - center;
     let a = ray.direction().dot(ray.direction());
     let b = oc.dot(ray.direction()) * 2.0;
     let c = oc.dot(oc) - radius * radius;
     let discriminant = b*b - 4.0*a*c;
-    return discriminant > 0.0;
+    if discriminant < 0.0 {
+        return -1.0;
+    } else {
+        return (-b - discriminant.sqrt()) / (2.0 * a);
+    }
 }
 
 fn color(r: Ray) -> Vec3 {
-    if hit_sphere(Vec3::from(0.0,0.0,-1.0), 0.5, r) {
-        return Vec3::from(1.0, 0.0, 0.0);
+    let t = hit_sphere(Vec3::from(0.0,0.0,-1.0), 0.5, r);
+    if t > 0.0 {
+        let n = (r.point_at(t) - Vec3::from(0.0,0.0,-1.0)).unit_vector();
+        return Vec3::from(n.x()+1.0, n.y() + 1.0, n.z()+1.0) * 0.5;
     }
 
     let unit_direction = r.direction().unit_vector();
