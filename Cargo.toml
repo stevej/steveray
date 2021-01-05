@@ -28,3 +28,8 @@ path = "bin/sphere2.rs"
 [[bin]]
 name = "camera"
 path = "bin/camera.rs"
+
+[[bin]]
+name = "diffuse"
+path = "bin/diffuse.rs"
+
