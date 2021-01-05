@@ -169,6 +169,19 @@ impl DivAssign<Vec3> for Vec3 {
     }
 }
 
+// a /= b
+impl DivAssign<f64> for Vec3 {
+    fn div_assign(&mut self, other: f64) {
+        let k = 1.0 / other;
+
+        *self = Self {
+            x: self.x * k,
+            y: self.y * k,
+            z: self.z * k
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::vec3::Vec3;

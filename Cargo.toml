@@ -8,7 +8,7 @@ description = "A Ray Tracer, made by Steve"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
+rand = "0.8.*"
 [[bin]]
 name = "gradient"
 path = "bin/gradient.rs"
@@ -24,3 +24,7 @@ path = "bin/sphere.rs"
 [[bin]]
 name = "sphere2"
 path = "bin/sphere2.rs"
+
+[[bin]]
+name = "camera"
+path = "bin/camera.rs"
