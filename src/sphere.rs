@@ -1,17 +1,29 @@
 use crate::vec3::Vec3;
 use crate::hit::{Hitable, HitRecord};
 use crate::ray::Ray;
+use crate::material::*;
+
 
 pub struct Sphere {
     center: Vec3,
     radius: f64,
+    material: Option<Box<dyn Material>>
 }
 
 impl Sphere {
     pub fn from(center: Vec3, radius: f64) -> Self {
         Sphere {
             center: center,
-            radius: radius
+            radius: radius,
+            material: None,
+        }
+    }
+    pub fn from_with_material(center: Vec3, radius: f64, material: Option<Box<dyn Material>>) -> Self 
+    {
+        Sphere {
+            center: center,
+            radius: radius,
+            material: material
         }
     }
 }
@@ -30,7 +42,8 @@ impl Hitable for Sphere {
                 let rec = HitRecord {
                     t: temp,
                     p: p,
-                    normal: (p - self.center) / self.radius
+                    normal: (p - self.center) / self.radius,
+                    material: &self.material,
                 };
 
                 return Ok(rec);
@@ -41,7 +54,8 @@ impl Hitable for Sphere {
                 let rec = HitRecord {
                     t: temp,
                     p: p,
-                    normal: (p - self.center) / self.radius
+                    normal: (p - self.center) / self.radius,
+                    material: &self.material,
                 };
 
                 return Ok(rec);

@@ -33,3 +33,6 @@ path = "bin/camera.rs"
 name = "diffuse"
 path = "bin/diffuse.rs"
 
+[[bin]]
+name = "metal"
+path = "bin/metal.rs"

@@ -32,6 +32,10 @@ impl Vec3 {
         return self.r() * other.r() + self.g() * other.g() + self.b() * other.b();
     }
 
+    pub fn reflect(&self, other: Self) -> Self {
+        let dot_product = self.dot(other);
+        return *self - ((other * dot_product) * 2.0);
+    }
     pub fn cross(&self, other: Self) -> Self {
         Self {
             x: self.y * other.z - self.z * other.y,
