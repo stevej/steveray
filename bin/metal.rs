@@ -51,9 +51,9 @@ fn main() {
     let sphere2 = Sphere::from_with_material(Vec3::from(0.0, -100.5, -1.0), 100.0,
         Some(Box::new(Lambertian { albedo: Vec3::from(0.8, 0.8, 0.0)})));
     let sphere3 = Sphere::from_with_material(Vec3::from(1.0, 0.0, -1.0,), 0.5,
-        Some(Box::new(Metal { albedo: Vec3::from(0.8, 0.6, 0.2)})));
+        Some(Box::new(Metal { albedo: Vec3::from(0.8, 0.6, 0.2), fuzz: 1.0})));
     let sphere4 = Sphere::from_with_material(Vec3::from(-1.0, 0.0, -1.0), 0.5,
-        Some(Box::new(Metal { albedo: Vec3::from(0.8, 0.8, 0.8)})));
+        Some(Box::new(Metal { albedo: Vec3::from(0.8, 0.8, 0.8), fuzz: 0.3})));
     world.items.push(Box::new(sphere1));
     world.items.push(Box::new(sphere2));
     world.items.push(Box::new(sphere3));
