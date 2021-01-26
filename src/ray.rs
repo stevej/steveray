@@ -8,19 +8,19 @@ pub struct Ray {
 
 impl Ray {
     pub fn from(a: Vec3, b: Vec3) -> Self {
-        Ray { a: a, b: b}
+        Ray { a: a, b: b }
     }
 
     pub fn origin(&self) -> Vec3 {
-        return self.a
+        return self.a;
     }
 
     pub fn direction(&self) -> Vec3 {
-        return self.b
+        return self.b;
     }
 
     pub fn point_at(&self, t: f64) -> Vec3 {
-        return self.a + self.b*t
+        return self.a + self.b * t;
     }
 }
 

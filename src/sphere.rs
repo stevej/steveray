@@ -1,13 +1,12 @@
-use crate::vec3::Vec3;
-use crate::hit::{Hitable, HitRecord};
-use crate::ray::Ray;
+use crate::hit::{HitRecord, Hitable};
 use crate::material::*;
-
+use crate::ray::Ray;
+use crate::vec3::Vec3;
 
 pub struct Sphere {
     center: Vec3,
     radius: f64,
-    material: Option<Box<dyn Material>>
+    material: Option<Box<dyn Material>>,
 }
 
 impl Sphere {
@@ -18,12 +17,15 @@ impl Sphere {
             material: None,
         }
     }
-    pub fn from_with_material(center: Vec3, radius: f64, material: Option<Box<dyn Material>>) -> Self 
-    {
+    pub fn from_with_material(
+        center: Vec3,
+        radius: f64,
+        material: Option<Box<dyn Material>>,
+    ) -> Self {
         Sphere {
             center: center,
             radius: radius,
-            material: material
+            material: material,
         }
     }
 }
@@ -34,9 +36,9 @@ impl Hitable for Sphere {
         let a = ray.direction().dot(ray.direction());
         let b = oc.dot(ray.direction());
         let c = oc.dot(oc) - self.radius * self.radius;
-        let discriminant = b*b - a*c;
+        let discriminant = b * b - a * c;
         if discriminant > 0.0 {
-            let mut temp = (-b - (b*b - a*c).sqrt()) / a;
+            let mut temp = (-b - (b * b - a * c).sqrt()) / a;
             if temp < max && temp > min {
                 let p = ray.point_at(temp);
                 let rec = HitRecord {
@@ -48,7 +50,7 @@ impl Hitable for Sphere {
 
                 return Ok(rec);
             }
-            temp = (-b + (b*b - a*c).sqrt()) / a;
+            temp = (-b + (b * b - a * c).sqrt()) / a;
             if temp < max && temp > min {
                 let p = ray.point_at(temp);
                 let rec = HitRecord {

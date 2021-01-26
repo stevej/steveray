@@ -1,4 +1,4 @@
-use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Vec3 {
@@ -8,20 +8,31 @@ pub struct Vec3 {
 }
 
 impl Vec3 {
-
     pub fn from(x: f64, y: f64, z: f64) -> Self {
-        Vec3 { x:x, y:y, z:z }
+        Vec3 { x: x, y: y, z: z }
     }
 
-    pub fn x(&self) -> &f64 { return &self.x }
-    pub fn y(&self) -> &f64 { return &self.y }
-    pub fn z(&self) -> &f64 { return &self.z }
-    pub fn r(&self) -> &f64 { return &self.x }
-    pub fn g(&self) -> &f64 { return &self.y }
-    pub fn b(&self) -> &f64 { return &self.z }
+    pub fn x(&self) -> &f64 {
+        return &self.x;
+    }
+    pub fn y(&self) -> &f64 {
+        return &self.y;
+    }
+    pub fn z(&self) -> &f64 {
+        return &self.z;
+    }
+    pub fn r(&self) -> &f64 {
+        return &self.x;
+    }
+    pub fn g(&self) -> &f64 {
+        return &self.y;
+    }
+    pub fn b(&self) -> &f64 {
+        return &self.z;
+    }
 
     pub fn squared_length(&self) -> f64 {
-        return self.x * self.x  + self.y * self.y + self.z * self.z;
+        return self.x * self.x + self.y * self.y + self.z * self.z;
     }
 
     pub fn length(&self) -> f64 {
@@ -40,7 +51,7 @@ impl Vec3 {
         Self {
             x: self.y * other.z - self.z * other.y,
             y: -(self.x * other.z - self.z * other.x),
-            z: self.x * other.y  - self.y * other.x
+            z: self.x * other.y - self.y * other.x,
         }
     }
 
@@ -50,7 +61,7 @@ impl Vec3 {
             x: self.x / divisor,
             y: self.y / divisor,
             z: self.z / divisor,
-        }
+        };
     }
 }
 
@@ -181,7 +192,7 @@ impl DivAssign<f64> for Vec3 {
         *self = Self {
             x: self.x * k,
             y: self.y * k,
-            z: self.z * k
+            z: self.z * k,
         }
     }
 }
@@ -191,39 +202,174 @@ mod tests {
     use crate::vec3::Vec3;
     #[test]
     fn dot_product() {
-        assert_eq!(Vec3{x:0.0,y:0.0,z:0.0}.dot(Vec3{x:0.0,y:0.0,z:0.0}), 0.0);
-        assert_eq!(Vec3{x:1.0,y:2.0,z:3.0}.dot(Vec3{x:4.0,y:5.0,z:6.0}), 32.0);
+        assert_eq!(
+            Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }
+            .dot(Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }),
+            0.0
+        );
+        assert_eq!(
+            Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            }
+            .dot(Vec3 {
+                x: 4.0,
+                y: 5.0,
+                z: 6.0
+            }),
+            32.0
+        );
     }
 
     #[test]
     fn cross_product() {
-        assert_eq!(Vec3{x:0.0,y:0.0,z:0.0}.cross(Vec3{x:0.0,y:0.0,z:0.0}), Vec3{x:0.0,y:0.0,z:0.0});
-        assert_eq!(Vec3{x:1.0,y:2.0,z:3.0}.cross(Vec3{x:4.0,y:5.0,z:6.0}), Vec3{x:-3.0,y:6.0,z:-3.0});
+        assert_eq!(
+            Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }
+            .cross(Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }),
+            Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }
+        );
+        assert_eq!(
+            Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            }
+            .cross(Vec3 {
+                x: 4.0,
+                y: 5.0,
+                z: 6.0
+            }),
+            Vec3 {
+                x: -3.0,
+                y: 6.0,
+                z: -3.0
+            }
+        );
     }
 
     #[test]
     fn test_length() {
-        assert_eq!(Vec3{x:1.0, y:2.0, z: 3.0}.length(), 3.7416573867739413);
+        assert_eq!(
+            Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            }
+            .length(),
+            3.7416573867739413
+        );
     }
 
     #[test]
     fn add_vecs() {
-        assert_eq!(Vec3{x:1.0, y:2.0, z:3.0} + Vec3{x: 1.0, y: 2.0, z: 3.0}, Vec3{x:2.0, y:4.0, z:6.0});
-        let mut vec123 = Vec3{x:1.0, y:2.0, z:3.0};
-        vec123 += Vec3{x: 1.0, y: 2.0, z: 3.0};
-        assert_eq!(vec123 , Vec3{x:2.0, y:4.0, z:6.0})
+        assert_eq!(
+            Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            } + Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            },
+            Vec3 {
+                x: 2.0,
+                y: 4.0,
+                z: 6.0
+            }
+        );
+        let mut vec123 = Vec3 {
+            x: 1.0,
+            y: 2.0,
+            z: 3.0,
+        };
+        vec123 += Vec3 {
+            x: 1.0,
+            y: 2.0,
+            z: 3.0,
+        };
+        assert_eq!(
+            vec123,
+            Vec3 {
+                x: 2.0,
+                y: 4.0,
+                z: 6.0
+            }
+        )
     }
     #[test]
     fn subtract_vecs() {
-        assert_eq!(Vec3{x:1.0, y:2.0, z:3.0} - Vec3{x:1.0, y:2.0, z:3.0}, Vec3{x:0.0, y:0.0, z:0.0});
-        let mut vec123 = Vec3{x:1.0, y:2.0, z:3.0};
+        assert_eq!(
+            Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            } - Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            },
+            Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }
+        );
+        let mut vec123 = Vec3 {
+            x: 1.0,
+            y: 2.0,
+            z: 3.0,
+        };
         let vec123_clone = vec123.clone();
         vec123 -= vec123_clone;
-        assert_eq!(vec123, Vec3{x:0.0, y:0.0, z:0.0});
+        assert_eq!(
+            vec123,
+            Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0
+            }
+        );
     }
 
     #[test]
     fn multiply_vecs() {
-        assert_eq!(Vec3{x:1.0, y:2.0, z:3.0} * Vec3{x:2.0, y:2.0, z:2.0}, Vec3{x:2.0, y: 4.0, z: 6.0})
+        assert_eq!(
+            Vec3 {
+                x: 1.0,
+                y: 2.0,
+                z: 3.0
+            } * Vec3 {
+                x: 2.0,
+                y: 2.0,
+                z: 2.0
+            },
+            Vec3 {
+                x: 2.0,
+                y: 4.0,
+                z: 6.0
+            }
+        )
     }
 }

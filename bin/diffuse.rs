@@ -1,19 +1,20 @@
-use steveray::sphere::Sphere;
-use steveray::camera::Camera;
-use steveray::ray::Ray;
-use steveray::hit_list::HitList;
-use steveray::hit::Hitable;
-use steveray::vec3::Vec3;
 use rand::Rng;
-
+use steveray::camera::Camera;
+use steveray::hit::Hitable;
+use steveray::hit_list::HitList;
+use steveray::ray::Ray;
+use steveray::sphere::Sphere;
+use steveray::vec3::Vec3;
 
 fn random_in_unit_sphere() -> Vec3 {
     let mut rng = rand::thread_rng();
     let mut p: Vec3;
     // Generate vectors in unit cube and test if they're in the unit sphere
     loop {
-      p = Vec3::from(rng.gen::<f64>(), rng.gen::<f64>(), rng.gen::<f64>());
-      if p.squared_length() >= 1.0 { break; }
+        p = Vec3::from(rng.gen::<f64>(), rng.gen::<f64>(), rng.gen::<f64>());
+        if p.squared_length() >= 1.0 {
+            break;
+        }
     }
     return p;
 }
@@ -24,13 +25,12 @@ fn color<T: Hitable + Sized>(ray: Ray, world: &T) -> Vec3 {
         Ok(rec) => {
             let target = rec.p + rec.normal + random_in_unit_sphere();
             return color(Ray::from(rec.p, target - rec.p), world) * 0.5;
-        },
+        }
         Err(_) => {
             let unit_direction = ray.direction().unit_vector();
             let t = (unit_direction.y() + 1.0) * 0.5;
-            (Vec3::from(1.0, 1.0, 1.0) * (1.0 - t)) + 
-            Vec3::from(0.5, 0.7, 1.0) * t
-        },
+            (Vec3::from(1.0, 1.0, 1.0) * (1.0 - t)) + Vec3::from(0.5, 0.7, 1.0) * t
+        }
     }
 }
 
@@ -41,16 +41,14 @@ fn main() {
     let mut rng = rand::thread_rng();
 
     println!("P3\n{} {}\n255", nx, ny);
-    let mut world = HitList {
-        items: Vec::new(),
-    };
+    let mut world = HitList { items: Vec::new() };
     let sphere1 = Sphere::from(Vec3::from(0.0, 0.0, -1.0), 0.5);
     world.items.push(Box::new(sphere1));
     let sphere2 = Sphere::from(Vec3::from(0.0, -100.5, -1.0), 100.0);
     world.items.push(Box::new(sphere2));
     let camera = Camera::default();
 
-    for j in (0..(ny-1)).rev() {
+    for j in (0..(ny - 1)).rev() {
         for i in 0..nx {
             let mut col = Vec3::from(0.0, 0.0, 0.0);
             for _ in 0..ns {

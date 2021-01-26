@@ -1,12 +1,12 @@
-use steveray::vec3::Vec3;
 use steveray::ray::Ray;
+use steveray::vec3::Vec3;
 
 fn hit_sphere(center: Vec3, radius: f64, ray: Ray) -> f64 {
     let oc = ray.origin() - center;
     let a = ray.direction().dot(ray.direction());
     let b = oc.dot(ray.direction()) * 2.0;
     let c = oc.dot(oc) - radius * radius;
-    let discriminant = b*b - 4.0*a*c;
+    let discriminant = b * b - 4.0 * a * c;
     if discriminant < 0.0 {
         return -1.0;
     } else {
@@ -15,15 +15,15 @@ fn hit_sphere(center: Vec3, radius: f64, ray: Ray) -> f64 {
 }
 
 fn color(r: Ray) -> Vec3 {
-    let t = hit_sphere(Vec3::from(0.0,0.0,-1.0), 0.5, r);
+    let t = hit_sphere(Vec3::from(0.0, 0.0, -1.0), 0.5, r);
     if t > 0.0 {
-        let n = (r.point_at(t) - Vec3::from(0.0,0.0,-1.0)).unit_vector();
-        return Vec3::from(n.x()+1.0, n.y() + 1.0, n.z()+1.0) * 0.5;
+        let n = (r.point_at(t) - Vec3::from(0.0, 0.0, -1.0)).unit_vector();
+        return Vec3::from(n.x() + 1.0, n.y() + 1.0, n.z() + 1.0) * 0.5;
     }
 
     let unit_direction = r.direction().unit_vector();
     let t = 0.5 * (unit_direction.y() + 1.0);
-    return Vec3::from(1.0, 1.0, 1.0)*(1.0 - t) + Vec3::from(0.5, 0.7, 1.0)*t
+    return Vec3::from(1.0, 1.0, 1.0) * (1.0 - t) + Vec3::from(0.5, 0.7, 1.0) * t;
 }
 
 fn main() {
@@ -35,11 +35,11 @@ fn main() {
     let origin = Vec3::from(0.0, 0.0, 0.0);
 
     println!("P3\n{} {}\n255", nx, ny);
-    for j in (0..(ny -1)).rev() {
+    for j in (0..(ny - 1)).rev() {
         for i in 0..nx {
             let u = (i as f64) / (nx as f64);
             let v = (j as f64) / (ny as f64);
-            let r = Ray::from(origin, lower_left_corner + horizontal*u + vertical*v);
+            let r = Ray::from(origin, lower_left_corner + horizontal * u + vertical * v);
             let color = color(r);
             let ir = (255.9 * color.x()) as i32;
             let ig = (255.9 * color.y()) as i32;
