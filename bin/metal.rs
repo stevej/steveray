@@ -44,9 +44,9 @@ fn color<'a, T: Hitable + Sized>(ray: &Ray, world: &T, depth: i32) -> Vec3 {
 fn main() {
     let mut rng = rand::thread_rng();
 
-    let nx = 200;
-    let ny = 100;
-    let ns = 100;
+    let nx = 800;
+    let ny = 400;
+    let ns = 400;
     let mut world = HitList { items: Vec::new() };
     let sphere1 = Sphere::from_with_material(
         Vec3::from(0.0, 0.0, -1.0),
@@ -82,7 +82,12 @@ fn main() {
     world.items.push(Box::new(sphere2));
     world.items.push(Box::new(sphere3));
     world.items.push(Box::new(sphere4));
-    let camera = Camera::default();
+    let camera = Camera::from(
+        Vec3::from(0.0, 0.0, 0.0),
+        Vec3::from(-2.0, -1.0, -1.0),
+        Vec3::from(4.0, 0.0, 0.0),
+        Vec3::from(0.0, 2.0, 0.0),
+    );
 
     println!("P3\n{} {}\n255", nx, ny);
     for j in (0..(ny - 1)).rev() {
