@@ -1,9 +1,9 @@
 [package]
 name = "steveray"
 version = "0.1.0"
-authors = ["Steve Jenson <stevej@fruitless.org>"]
+authors = ["Steve Jenson <stevej@gmail.com>"]
 edition = "2018"
-description = "A Ray Tracer, made by Steve"
+description = "Rust port of Ray Tracing in One Weekend"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -36,3 +36,6 @@ path = "bin/diffuse.rs"
 [[bin]]
 name = "metal"
 path = "bin/metal.rs"
+
+[profile.release]
+debug = true
